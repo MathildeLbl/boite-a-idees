@@ -1,32 +1,23 @@
-<%= form_with(model: idea) do |form| %>
+<%= form_with(model: idea, local: true) do |f| %>
   <% if idea.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(idea.errors.count, "error") %> prohibited this idea from being saved:</h2>
-
+    <div class="alert alert-danger">
       <ul>
-        <% idea.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% idea.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
+  <div class="mb-3">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  <%= f.submit class: "btn btn-primary" %>
 <% end %>

@@ -1,16 +1,20 @@
-<p style="color: green"><%= notice %></p>
+<h1>Les idées de la communauté</h1>
 
-<% content_for :title, "Ideas" %>
+<% if user_signed_in? %>
+  <%= link_to "Proposer une idée", new_idea_path, class: "btn btn-success mb-3" %>
+<% end %>
 
-<h1>Ideas</h1>
-
-<div id="ideas">
+<div class="row">
   <% @ideas.each do |idea| %>
-    <%= render idea %>
-    <p>
-      <%= link_to "Show this idea", idea %>
-    </p>
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5><%= link_to idea.title, idea_path(idea) %></h5>
+          <p><%= truncate(idea.description, length: 100) %></p>
+          <small>Par <%= idea.user.username || "Anonyme" %></small>
+        </div>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New idea", new_idea_path %>
