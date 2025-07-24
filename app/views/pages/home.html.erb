@@ -1,8 +1,3 @@
-<h1>Bienvenue sur BrainWave</h1>
+<h1>Bienvenue sur BrainWave !</h1>
+<p>Connecte-toi pour découvrir et partager des idées 🚀</p>
 
-<% if user_signed_in? %>
-  <%= link_to "Voir les idées", ideas_path, class: "btn btn-primary" %>
-<% else %>
-  <%= link_to "Se connecter", new_user_session_path, class: "btn btn-outline-primary" %>
-  <%= link_to "Créer un compte", new_user_registration_path, class: "btn btn-success" %>
-<% end %>
