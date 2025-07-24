@@ -1,0 +1,11 @@
+<h1><%= @idea.title %></h1>
+<p><%= @idea.description %></p>
+
+<p><strong>Proposé par :</strong> <%= @idea.user.username %></p>
+
+<% if policy(@idea).update? %>
+  <%= link_to "Modifier", edit_idea_path(@idea), class: "btn btn-primary" %>
+  <%= link_to "Supprimer", idea_path(@idea), method: :delete, data: { confirm: "Es-tu sûr ?" }, class: "btn btn-danger" %>
+<% end %>
+
+<%= link_to "Retour", ideas_path, class: "btn btn-secondary" %>
