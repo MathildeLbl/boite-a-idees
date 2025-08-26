@@ -5,7 +5,7 @@
 
 <% if policy(@idea).update? %>
   <%= link_to "Modifier", edit_idea_path(@idea), class: "btn btn-primary" %>
-  <%= link_to "Supprimer", idea_path(@idea), method: :delete, data: { confirm: "Es-tu sûr ?" }, class: "btn btn-danger" %>
+  <%= button_to "Supprimer", idea_path(@idea), method: :delete, data: { confirm: "Es-tu sûr ?" }, class: "btn btn-danger" %>
 <% end %>
 
 <%= link_to "Retour", ideas_path, class: "btn btn-secondary" %>
