@@ -38,7 +38,7 @@ class IdeasController < ApplicationController
 
   def destroy
     @idea = Idea.find(params[:id])
-    authorize @idea  # Pundit vérifie si l'utilisateur peut supprimer
+    authorize @idea
     @idea.destroy
     redirect_to ideas_path, notice: "Idée supprimée avec succès."
   end

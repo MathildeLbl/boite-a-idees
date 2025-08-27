@@ -1,17 +1,24 @@
-<div id="<%= dom_id comment %>">
-  <p>
-    <strong>Content:</strong>
-    <%= comment.content %>
-  </p>
+<%= turbo_frame_tag dom_id(comment) do %>
+  <div class="card mb-2">
+    <div class="card-body p-3">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <strong>
+            <%= comment.user.try(:username).presence || comment.user.email.split('@').first %>
+          </strong>
+          <small class="text-muted">· <%= time_ago_in_words(comment.created_at) %> ago</small>
+        </div>
 
-  <p>
-    <strong>User:</strong>
-    <%= comment.user_id %>
-  </p>
+        <% if policy(comment).destroy? %>
+          <%= button_to "Supprimer",
+                        comment_path(comment),
+                        method: :delete,
+                        data: { turbo_confirm: "Supprimer ce commentaire ?" },
+                        class: "btn btn-sm btn-outline-danger" %>
+        <% end %>
+      </div>
 
-  <p>
-    <strong>Idea:</strong>
-    <%= comment.idea_id %>
-  </p>
-
-</div>
+      <p class="mb-0 mt-2"><%= simple_format(h(comment.body)) %></p>
+    </div>
+  </div>
+<% end %>

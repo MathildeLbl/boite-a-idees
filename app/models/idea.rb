@@ -4,4 +4,5 @@ class Idea < ApplicationRecord
   has_many :comments
   has_many :idea_tags
   has_many :tags, through: :idea_tags
+  has_many :comments, dependent: :destroy
 end

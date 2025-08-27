@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :ideas
+  resources :ideas do
+  resources :comments, only: [:create, :destroy], shallow: true
+  end
+  
   resources :tags
-  resources :comments
+  resources :comments, only: []
 
   authenticated :user do
     root to: 'ideas#index', as: :authenticated_root

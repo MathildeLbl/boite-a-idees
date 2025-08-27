@@ -9,3 +9,13 @@
 <% end %>
 
 <%= link_to "Retour", ideas_path, class: "btn btn-secondary" %>
+
+<hr class="my-4">
+
+<h3>Commentaires</h3>
+
+<div id="comments">
+  <%= render @idea.comments.order(created_at: :asc) %>
+</div>
+
+<%= render "comments/form", idea: @idea, comment: Comment.new %>
