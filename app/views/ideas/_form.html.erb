@@ -19,5 +19,13 @@
     <%= f.text_area :description, class: "form-control" %>
   </div>
 
+  <div class="mb-3">
+    <%= f.label :tags_text, "Tags (séparés par des virgules)" %>
+    <%= f.text_field :tags_text,
+          value: @idea.tags_text,
+          placeholder: "ex: startup, design, IA",
+          class: "form-control" %>
+  </div>
+
   <%= f.submit class: "btn btn-primary" %>
 <% end %>

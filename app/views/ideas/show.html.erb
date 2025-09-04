@@ -1,4 +1,11 @@
 <h1><%= @idea.title %></h1>
+
+<div class="mt-2">
+  <% @idea.tags.each do |tag| %>
+    <%= link_to tag.name, ideas_path(tag: tag.name), class: "badge bg-secondary me-1" %>
+  <% end %>
+</div>
+
 <p><%= @idea.description %></p>
 
 <p><strong>Proposé par :</strong> <%= @idea.user.username %></p>
@@ -17,5 +24,6 @@
 <div id="comments">
   <%= render @idea.comments.order(created_at: :asc) %>
 </div>
+
 
 <%= render "comments/form", idea: @idea, comment: Comment.new %>

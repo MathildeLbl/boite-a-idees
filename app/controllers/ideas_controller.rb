@@ -4,7 +4,12 @@ class IdeasController < ApplicationController
   before_action :authorize_idea, only: [:edit, :update, :destroy]
 
   def index
-    @ideas = policy_scope(Idea.all)
+    if params[:tag].present?
+      @current_tag = Tag.find_by(name: params[:tag].downcase)
+      @ideas = @current_tag ? policy_scope(@current_tag.ideas) : Idea.none
+    else
+      @ideas = policy_scope(Idea.all)
+    end
   end
 
   def show
@@ -18,29 +23,42 @@ class IdeasController < ApplicationController
   def create
     @idea = current_user.ideas.build(idea_params)
     authorize @idea
+    @idea.sync_tags_from_text
 
     if @idea.save
       redirect_to @idea, notice: "Idée créée avec succès !"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit; end
 
   def update
-    if @idea.update(idea_params)
+    @idea.assign_attributes(idea_params)
+    @idea.sync_tags_from_text
+
+    if @idea.save
       redirect_to @idea, notice: "Idée mise à jour."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @idea = Idea.find(params[:id])
     authorize @idea
     @idea.destroy
     redirect_to ideas_path, notice: "Idée supprimée avec succès."
+  end
+
+  def index
+  @ideas = policy_scope(Idea.all)
+
+  if params[:q].present?
+    @ideas = @ideas.search_by_tag(params[:q])
+  end
+
+  @ideas = @ideas.order(created_at: :desc)
   end
 
   private
@@ -54,6 +72,6 @@ class IdeasController < ApplicationController
   end
 
   def idea_params
-    params.require(:idea).permit(:title, :description)
+    params.require(:idea).permit(:title, :description, :tags_text)
   end
 end

@@ -1,17 +1,23 @@
-<div id="<%= dom_id idea %>">
-  <p>
-    <strong>Title:</strong>
-    <%= idea.title %>
-  </p>
+<div class="card mb-3 border-dark rounded shadow-sm" id="<%= dom_id idea %>">
+  <div class="card-body">
 
-  <p>
-    <strong>Description:</strong>
-    <%= idea.description %>
-  </p>
+    <h3 class="card-title">
+      <%= link_to idea.title, idea, class: "text-decoration-none text-dark" %>
+    </h3>
 
-  <p>
-    <strong>User:</strong>
-    <%= idea.user_id %>
-  </p>
+    <p class="card-text"><%= idea.description %></p>
 
+    <% if idea.tags.any? %>
+      <p class="mt-2">
+        <strong>Tags :</strong>
+        <% idea.tags.each do |tag| %>
+          <span class="badge bg-secondary"><%= tag.name %></span>
+        <% end %>
+      </p>
+    <% end %>
+
+    <p class="text-muted small">
+      <strong>Posté par :</strong> Utilisateur n°<%= idea.user_id %>
+    </p>
+  </div>
 </div>

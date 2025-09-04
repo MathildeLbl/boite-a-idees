@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   resources :ideas do
   resources :comments, only: [:create, :destroy], shallow: true
   end
-  
-  resources :tags
+
+  resources :tags, only: [:index, :show]
   resources :comments, only: []
 
   authenticated :user do

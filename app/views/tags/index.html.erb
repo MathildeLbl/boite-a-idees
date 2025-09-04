@@ -1,16 +1,6 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Tags" %>
-
 <h1>Tags</h1>
-
-<div id="tags">
+<div class="d-flex flex-wrap gap-2">
   <% @tags.each do |tag| %>
-    <%= render tag %>
-    <p>
-      <%= link_to "Show this tag", tag %>
-    </p>
+    <%= link_to tag.name, tag_path(tag), class: "badge bg-light border" %>
   <% end %>
 </div>
-
-<%= link_to "New tag", new_tag_path %>
